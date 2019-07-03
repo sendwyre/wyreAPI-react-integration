@@ -13,7 +13,7 @@ class UserProfile extends Component {
   };
 
   async componentWillMount() {
-    if (localStorage.getItem("wyreAccount") === null) {
+    if (localStorage.getItem("wyreSecretKey") === null) {
       const wyreAccountObject = await wyre.createWyreAccount();
       localStorage.setItem("wyreAccount", JSON.stringify(wyreAccountObject));
       this.setState({ wyreAccount: wyreAccountObject });

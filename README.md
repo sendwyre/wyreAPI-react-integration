@@ -1,69 +1,33 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# React <> Wyre API Integration
+
+## READ THIS FIRST
+
+## Architecture
+
+The premise of this React front end application is to give you, Wyre's potential new Partner, a visual insight into the KYC data we need to collect from you, the Partner, along with the status updates from our compliance team regarding the KYC data of your users. There's only 2 types of components in this application.
+
+1. **The UserProfile Component** (displays the status and any notes related to the user that require follow up from our compliance team). All the other components such as addressUserForm, cellPhoneUserForm, etc, extend from the UserProfile class. Each of those components have their own doSubmit function that uses different endpoints from the ./services/wyreApiService.js file. I would suggest you to review over the wyreApiService.js file
+
+2. **The Input Component**. This component allows to create input components dynamically. It is used extensively in each component in the wyreComponents directory
+
+### Wyre Authentication
+
+This React application uses Bearer Token authentication. Read more about authenticating with Wyre's API [here](https://docs.sendwyre.com/docs/authentication).
+
+When you first click on the `New Wyre User` tab, it will take a few seconds for a Wyre Account to generate. Account creation and authentication is handled in the `./services/wyreApiService.js` file. When a new user is present, a secret key is generated and stored in `localStorage` in the browser. An account is then created by hitting Wyre's [create account](https://docs.sendwyre.com/docs/create-account) endpoint. Once the account has been created, the user will be pushed to the `/userProfile` screen.
+
+Once the account has been created, the componentWillMount function checks if a secretKey is in localStorage. If it is, it will call Wyre's [get account](https://docs.sendwyre.com/docs/get-account) endpoint and mount the results of that endpoint to the screen, if not, it will create a new account via the mechanism describe in the previous paragraph.
 
 ## Available Scripts
 
-In the project directory, you can run:
+To start the application, run:
 
-### `npm start`
+#### `npm start`
+
+click on the `New Wyre User` tab on the navigation bar.
 
 Runs the app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
-# wyreAPI-react-integration

@@ -8,8 +8,13 @@ const instance = axios.create({
     "Content-Type": "application/json"
   }
 });
+
+const SECRET_KEY = "wyreSecretKey";
+
 async function generateWyreSecretKey() {
-  return crypto.randomBytes(30).toString("hex");
+  let secretKey = crypto.randomBytes(30).toString("hex");
+  localStorage.setItem(SECRET_KEY, secretKey);
+  return secretKey;
 }
 
 async function submitWyreAuthToken(secretKey) {
@@ -24,25 +29,27 @@ async function submitWyreAuthToken(secretKey) {
   );
   return data;
 }
+
+function setAxiosHeaders() {
+  instance.defaults.headers.common.Authorization =
+    "Bearer " + localStorage.getItem(SECRET_KEY);
+}
+
 export async function createWyreAccount() {
   console.log("Creating an empty Wyre Account");
   let secretKey = await generateWyreSecretKey();
 
-  await submitWyreAuthToken(secretKey);
+  const key = await submitWyreAuthToken(secretKey);
+  console.log(key);
   let newWyreAccount = {
     type: "INDIVIDUAL",
     country: "US",
     subaccount: false,
     referrerAccountId: wyreApi.testAccountId
   };
+  setAxiosHeaders();
   const { data } = await instance.post("/v3/accounts", newWyreAccount);
-  localStorage.setItem("wyreSecretKey", secretKey);
   return data;
-}
-
-function setAxiosHeaders() {
-  instance.defaults.headers.common.Authorization =
-    "Bearer " + localStorage.getItem("wyreSecretKey");
 }
 
 export async function getWyreAccountInformation(accountId, secretKey) {
@@ -88,7 +95,7 @@ export async function uploadWyreDocument(file, fieldId, accountId) {
     baseURL: wyreApi.testWyreApiUrl,
     headers: {
       "Content-Type": file.type,
-      Authorization: "Bearer " + localStorage.getItem("wyreSecretKey")
+      Authorization: "Bearer " + localStorage.getItem(SECRET_KEY)
     }
   });
 }
