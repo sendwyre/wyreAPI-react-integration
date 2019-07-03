@@ -1,0 +1,16 @@
+{
+  "testWyreApiUrl": "https://api.testwyre.com",
+  "prodWyreApiUrl": "https://api.sendwyre.com",
+  "testAccountId": "AC_YNWFWXDW3AG",
+  "updateAccountValues": {
+    "email": "individualEmail",
+    "cellPhone": "individualCellphoneNumber",
+    "legalName": "individualLegalName",
+    "dateOfBirth": "individualDateOfBirth",
+    "socialSecurityNumber": "individualSsn",
+    "address": "individualResidenceAddress",
+    "governmentId": "individualGovernmentId",
+    "paymentMethod": "individualSourceOfFunds",
+    "proofOfAddress": "individualProofOfAddress"
+  }
+}
