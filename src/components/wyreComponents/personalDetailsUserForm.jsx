@@ -17,15 +17,41 @@ class PersonalDetailsUserForm extends UserProfile {
     individualLegalName: Joi.string()
       .label("Legal Name")
       .regex(/^[a-zA-Z]{2,} [a-zA-Z]{2,}$/)
-      .required(),
+      .required()
+      .options({
+        language: {
+          string: {
+            regex: {
+              base:
+                "must be a valid first and last name with at least 2 characters per name"
+            }
+          }
+        }
+      }),
     individualDateOfBirth: Joi.string()
       .label("Date Of Birth")
       .regex(/^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/)
-      .required(),
+      .required()
+      .options({
+        language: {
+          string: {
+            regex: { base: "must be in the following format: YYYY-MM-DD" }
+          }
+        }
+      }),
     individualSsn: Joi.string()
       .label("SSN")
       .regex(/^[0-9]{3}-[0-9]{2}-[0-9]{4}$/)
       .required()
+      .options({
+        language: {
+          string: {
+            regex: {
+              base: "must be in the following format XXX-XX-XXXX"
+            }
+          }
+        }
+      })
   };
 
   handleSubmit = e => {
@@ -69,17 +95,27 @@ class PersonalDetailsUserForm extends UserProfile {
 
   render() {
     return (
-      <div>
+      <div className="container-fluid wyre-container">
         <h1>Submit your personal details</h1>
-        <form onSubmit={this.handleSubmit}>
-          {this.renderInput("individualLegalName", 'Legal Name "First Last"')}
-          {this.renderInput(
-            "individualDateOfBirth",
-            "Date of Birth YYYY-MM-DD"
-          )}
-          {this.renderInput("individualSsn", "US Social Security Number")}
-          {this.renderButton("Send")}
-        </form>
+        <div className="row justify-content-center align-items-center">
+          <div className="">
+            <form
+              onSubmit={this.handleSubmit}
+              // className=" justify-content-center align-items-center"
+            >
+              {this.renderInput(
+                "individualLegalName",
+                'Legal Name "First Last"'
+              )}
+              {this.renderInput(
+                "individualDateOfBirth",
+                "Date of Birth YYYY-MM-DD"
+              )}
+              {this.renderInput("individualSsn", "US Social Security Number")}
+              {this.renderButton("Send")}
+            </form>
+          </div>
+        </div>
       </div>
     );
   }

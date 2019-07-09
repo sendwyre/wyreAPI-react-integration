@@ -52,7 +52,7 @@ export async function createWyreAccount() {
   return data;
 }
 
-export async function getWyreAccountInformation(accountId, secretKey) {
+export async function getWyreAccountInformation(accountId) {
   console.log("Getting account information for: " + accountId);
   setAxiosHeaders();
   const { data } = await instance.get("/v3/accounts/" + accountId);

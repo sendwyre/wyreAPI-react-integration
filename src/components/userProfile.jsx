@@ -9,7 +9,8 @@ import { updateAccountValues } from "../wyreapiconfig.json";
 class UserProfile extends Component {
   state = {
     user: {},
-    wyreAccount: {}
+    wyreAccount: {},
+    defaultOptionValue: null
   };
 
   async componentWillMount() {
@@ -26,20 +27,32 @@ class UserProfile extends Component {
   }
 
   handleChange = ({ currentTarget: input }) => {
-    const errors = { ...this.state.errors };
-    const errorMessage = this.validateProperty(input);
-    if (errorMessage) errors[input.name] = errorMessage;
-    else delete errors[input.name];
+    // const errors = { ...this.state.errors };
+    // const errorMessage = this.validateProperty(input);
+    // if (errorMessage) errors[input.name] = errorMessage;
+    // else delete errors[input.name];
 
     const data = { ...this.state.data };
     data[input.name] = input.value;
-    this.setState({ data, errors });
+    this.setState({ data });
+    // this.setState({ data, errors });
+  };
+
+  handleError = ({ currentTarget: input }) => {
+    const errors = { ...this.state.errors };
+    const errorMessage = this.validateProperty(input);
+    console.log("HANDLE ERRORS", errorMessage);
+    if (errorMessage) errors[input.name] = errorMessage;
+    else delete errors[input.name];
+
+    this.setState({ errors });
   };
 
   validateProperty = ({ name, value }) => {
     const obj = { [name]: value };
     const schema = { [name]: this.schema[name] };
     const { error } = Joi.validate(obj, schema);
+    // console.log(error.details);
     return error ? error.details[0].message : null;
   };
 
@@ -56,7 +69,36 @@ class UserProfile extends Component {
     return errors;
   };
 
-  renderInput(name, label, type = "text") {
+  renderOption(optionList, name, label) {
+    const defaultOptionValue = this.state.defaultOptionValue;
+    return (
+      <React.Fragment>
+        <div>
+          <label>{label}</label>
+        </div>
+        <div>
+          <select onChange={this.handleChange} name={name}>
+            <option value={defaultOptionValue}>{defaultOptionValue}</option>
+            {this.makeDropDownOptionMenu(optionList)}
+          </select>
+        </div>
+      </React.Fragment>
+    );
+  }
+
+  makeDropDownOptionMenu(optionList) {
+    return (
+      <React.Fragment>
+        {optionList.map(value => (
+          <option key={value} value={value}>
+            {value}
+          </option>
+        ))}
+      </React.Fragment>
+    );
+  }
+
+  renderInput(name, label, size, type = "text") {
     const { data, errors } = this.state;
 
     return (
@@ -64,16 +106,22 @@ class UserProfile extends Component {
         type={type}
         name={name}
         value={data[name]}
+        size={size}
         label={label}
         onChange={this.handleChange}
         error={errors[name]}
+        // onBlur={this.handleError}
       />
     );
   }
 
   renderButton(label) {
     return (
-      <button disabled={this.validate()} className="btn btn-primary">
+      <button
+        // disabled={this.validate()}
+        className="btn btn-primary"
+      >
+        {/* <button className="btn btn-primary"> */}
         {label}
       </button>
     );

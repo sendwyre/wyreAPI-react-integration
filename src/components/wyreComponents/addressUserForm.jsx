@@ -13,6 +13,63 @@ class AddressUserForm extends UserProfile {
       postalCode: "",
       country: ""
     },
+    states: [
+      "AL",
+      "AK",
+      "AS",
+      "AZ",
+      "AR",
+      "CA",
+      "CO",
+      "CT",
+      "DE",
+      "DC",
+      "FM",
+      "FL",
+      "GA",
+      "HI",
+      "ID",
+      "IL",
+      "IN",
+      "IA",
+      "KS",
+      "KY",
+      "LA",
+      "ME",
+      "MD",
+      "MA",
+      "MI",
+      "MN",
+      "MS",
+      "MO",
+      "MT",
+      "NE",
+      "NV",
+      "NH",
+      "NJ",
+      "NM",
+      "NY",
+      "NC",
+      "ND",
+      "OH",
+      "OK",
+      "OR",
+      "PW",
+      "PA",
+      "PR",
+      "RI",
+      "SC",
+      "SD",
+      "TN",
+      "TX",
+      "UT",
+      "VT",
+      "VA",
+      "WA",
+      "WV",
+      "WI",
+      "WY"
+    ],
     errors: { name: "" }
   };
   schema = {
@@ -22,7 +79,12 @@ class AddressUserForm extends UserProfile {
     city: Joi.string()
       .label("city")
       .regex(/^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/)
-      .required(),
+      .required()
+      .options({
+        language: {
+          string: { regex: { base: "must be a valid US city" } }
+        }
+      }),
     state: Joi.string()
       .label("state")
       .regex(
@@ -32,7 +94,12 @@ class AddressUserForm extends UserProfile {
     postalCode: Joi.string()
       .label("postalCode")
       .regex(/^[0-9]{5}(?:-[0-9]{4})?$/)
-      .required(),
+      .required()
+      .options({
+        language: {
+          string: { regex: { base: "must be a 5 digit US Zipcode" } }
+        }
+      }),
     country: Joi.string()
       .label("country")
       .regex(/^US$/)
@@ -42,6 +109,7 @@ class AddressUserForm extends UserProfile {
   handleSubmit = e => {
     e.preventDefault();
     const errors = this.validate();
+    console.log(errors, this.state.data);
     this.setState({ errors: errors || {} });
     if (errors) return;
     this.doSubmit();
@@ -71,16 +139,24 @@ class AddressUserForm extends UserProfile {
 
   render() {
     return (
-      <div>
-        <h1>Submit a Valid Email Address</h1>
-        <form onSubmit={this.handleSubmit}>
-          {this.renderInput("street1", "Street Address")}
-          {this.renderInput("city", "City")}
-          {this.renderInput("state", "State")}
-          {this.renderInput("postalCode", "Postal Code")}
-          {this.renderInput("country", 'Country - Must be "US"')}
-          {this.renderButton("Submit")}
-        </form>
+      <div className="container-fluid wyre-container">
+        <h1>Submit a Valid US Address</h1>
+        <div className="row justify-content-center align-items-center">
+          <form
+            onSubmit={this.handleSubmit}
+            // className="needs-validation"
+            // noValidate
+          >
+            {this.renderInput("street1", "Street Address")}
+            {this.renderInput("city", "City")}
+            {this.renderOption(this.state.states, "state", "State")}
+            {/* {this.renderInput("state", "State")} */}
+            {this.renderInput("postalCode", "Postal Code")}
+            {/* {this.renderInput("country", 'Country - Must be "US"')} */}
+            {this.renderOption(["US"], "country", "Country")}
+            {this.renderButton("Submit")}
+          </form>
+        </div>
       </div>
     );
   }

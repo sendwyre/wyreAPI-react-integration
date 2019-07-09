@@ -11,3 +11,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.wyre-container {
+  text-align: center;
+  background-color: grey;
+  max-width: 400px;
+  padding: 20px;
+  margin: 50px 0;
+}
