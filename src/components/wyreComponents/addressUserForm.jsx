@@ -109,7 +109,6 @@ class AddressUserForm extends UserProfile {
   handleSubmit = e => {
     e.preventDefault();
     const errors = this.validate();
-    console.log(errors, this.state.data);
     this.setState({ errors: errors || {} });
     if (errors) return;
     this.doSubmit();
@@ -140,22 +139,18 @@ class AddressUserForm extends UserProfile {
   render() {
     return (
       <div className="container-fluid wyre-container">
-        <h1>Submit a Valid US Address</h1>
+        {this.renderWyreHeader("Valid US Address")}
         <div className="row justify-content-center align-items-center">
-          <form
-            onSubmit={this.handleSubmit}
-            // className="needs-validation"
-            // noValidate
-          >
-            {this.renderInput("street1", "Street Address")}
-            {this.renderInput("city", "City")}
-            {this.renderOption(this.state.states, "state", "State")}
-            {/* {this.renderInput("state", "State")} */}
-            {this.renderInput("postalCode", "Postal Code")}
-            {/* {this.renderInput("country", 'Country - Must be "US"')} */}
-            {this.renderOption(["US"], "country", "Country")}
-            {this.renderButton("Submit")}
-          </form>
+          <div className="wyre-personal-details-group">
+            <form onSubmit={this.handleSubmit}>
+              {this.renderInput("street1", "Street Address")}
+              {this.renderInput("city", "City")}
+              {this.renderOption(this.state.states, "state", "State")}
+              {this.renderInput("postalCode", "Postal Code")}
+              {this.renderOption(["US"], "country", "Country")}
+              {this.renderButton("Submit")}
+            </form>
+          </div>
         </div>
       </div>
     );

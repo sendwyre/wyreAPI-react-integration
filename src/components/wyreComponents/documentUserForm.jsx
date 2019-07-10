@@ -51,7 +51,7 @@ class DocumentUserForm extends UserProfile {
     const maxSize = 5242880;
     return (
       <div className="container-fluid wyre-container">
-        <h1>Upload a US Passport or Driver's License</h1>
+        {this.renderWyreHeader("US Driver's License or Passport")}
         <div>
           <form onSubmit={this.handleSubmit}>
             <Dropzone
@@ -123,7 +123,7 @@ class DocumentUserForm extends UserProfile {
                 </div>
               )}
             </div>
-            {this.renderButton("Submit")}
+            <div className="wyre-submit-div">{this.renderButton("Submit")}</div>
           </form>
         </div>
       </div>

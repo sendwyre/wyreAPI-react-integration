@@ -9,14 +9,14 @@ const US_CELLPHONE_PREFIX = "+1";
 class CellPhoneUserForm extends UserProfile {
   state = {
     data: {
-      cellPhoneAreaCode: ""
+      cellPhoneNumber: ""
       // cellPhoneNumber1: "",
       // cellPhoneNumber2: ""
     },
     errors: { name: "" }
   };
   schema = {
-    cellPhoneAreaCode: Joi.string()
+    cellPhoneNumber: Joi.string()
       .trim()
       .regex(/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/)
       .required()
@@ -30,16 +30,6 @@ class CellPhoneUserForm extends UserProfile {
           }
         }
       })
-    // cellPhoneNumber1: Joi.string()
-    //   .trim()
-    //   .regex(/^[0-9]{3}$/)
-    //   .required()
-    //   .label("cellPhoneNumber1"),
-    // cellPhoneNumber2: Joi.string()
-    //   .trim()
-    //   .regex(/^[0-9]{4}$/)
-    //   .required()
-    //   .label("cellPhoneNumber2")
   };
 
   handleSubmit = e => {
@@ -51,11 +41,7 @@ class CellPhoneUserForm extends UserProfile {
   };
 
   doSubmit = async () => {
-    let cellPhoneNumber =
-      US_CELLPHONE_PREFIX + this.state.data.cellPhoneAreaCode;
-    // this.state.data.cellPhoneNumber1 +
-    // this.state.data.cellPhoneNumber2;
-    // console.log(cellPhoneNumber);
+    let cellPhoneNumber = US_CELLPHONE_PREFIX + this.state.data.cellPhoneNumber;
     try {
       let wyreAccountId = await JSON.parse(localStorage.getItem("wyreAccount"))
         .id;
@@ -76,16 +62,14 @@ class CellPhoneUserForm extends UserProfile {
   render() {
     return (
       <div className="container-fluid wyre-container">
-        <h1>Submit a Valid Cell Phone Number</h1>
+        {this.renderWyreHeader("Valid Cellphone Number")}
         <div className="row justify-content-center align-items-center">
-          <div className="">
+          <div className="wyre-personal-details-group">
             <form onSubmit={this.handleSubmit}>
               {this.renderInput(
-                "cellPhoneAreaCode",
+                "cellPhoneNumber",
                 "Cell phone number with Area Code"
               )}
-              {/* {this.renderInput("cellPhoneNumber1", "Number", 1)}
-              {this.renderInput("cellPhoneNumber2", "", 1)} */}
               {this.renderButton("Submit")}
             </form>
           </div>

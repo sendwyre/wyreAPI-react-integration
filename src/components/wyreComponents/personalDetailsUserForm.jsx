@@ -96,13 +96,10 @@ class PersonalDetailsUserForm extends UserProfile {
   render() {
     return (
       <div className="container-fluid wyre-container">
-        <h1>Submit your personal details</h1>
+        {this.renderWyreHeader("Personal Details")}
         <div className="row justify-content-center align-items-center">
-          <div className="">
-            <form
-              onSubmit={this.handleSubmit}
-              // className=" justify-content-center align-items-center"
-            >
+          <div className="wyre-personal-details-group">
+            <form onSubmit={this.handleSubmit}>
               {this.renderInput(
                 "individualLegalName",
                 'Legal Name "First Last"'
@@ -111,7 +108,10 @@ class PersonalDetailsUserForm extends UserProfile {
                 "individualDateOfBirth",
                 "Date of Birth YYYY-MM-DD"
               )}
-              {this.renderInput("individualSsn", "US Social Security Number")}
+              {this.renderInput(
+                "individualSsn",
+                "US Social Security Number XXX-XX-XXXX"
+              )}
               {this.renderButton("Send")}
             </form>
           </div>

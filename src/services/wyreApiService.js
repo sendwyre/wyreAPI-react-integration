@@ -40,7 +40,6 @@ export async function createWyreAccount() {
   let secretKey = await generateWyreSecretKey();
 
   const key = await submitWyreAuthToken(secretKey);
-  console.log(key);
   let newWyreAccount = {
     type: "INDIVIDUAL",
     country: "US",
@@ -65,7 +64,6 @@ export async function updateWyreAccount(wyreValueObj, accountId) {
   const updateWyreAccount = {
     profileFields: [wyreValueObj]
   };
-  console.log(updateWyreAccount);
   const { data } = await instance.post(
     "/v3/accounts/" + accountId,
     updateWyreAccount

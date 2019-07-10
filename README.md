@@ -22,6 +22,12 @@ Once the account has been created, the componentWillMount function checks if a s
 
 To start the application, run:
 
+#### `git clone https://github.com/sendwyre/wyreAPI-react-integration.git`
+
+#### `cd wyreAPI-react-integration`
+
+#### `npm i`
+
 #### `npm start`
 
 click on the `New Wyre User` tab on the navigation bar.

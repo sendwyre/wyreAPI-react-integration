@@ -51,7 +51,7 @@ class ProofOfAddressUserForm extends UserProfile {
     const maxSize = 5242880;
     return (
       <div className="container-fluid wyre-container">
-        <h1>Upload Proof of Address Document</h1>
+        {this.renderWyreHeader("Proof of Address")}
         <div>
           <form onSubmit={this.handleSubmit}>
             <Dropzone
