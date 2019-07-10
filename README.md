@@ -1,5 +1,7 @@
 # React <> Wyre API Integration
 
+![Wyre React Image](./src/assets/userprofile.png)
+
 ## READ THIS FIRST
 
 ## Architecture
