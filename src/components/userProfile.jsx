@@ -79,14 +79,14 @@ class UserProfile extends Component {
         <div>
           <select onChange={this.handleChange} name={name}>
             <option value={defaultOptionValue}>{defaultOptionValue}</option>
-            {this.makeDropDownOptionMenu(optionList)}
+            {this.makeDropDownOptionMenuForUSStates(optionList)}
           </select>
         </div>
       </React.Fragment>
     );
   }
 
-  makeDropDownOptionMenu(optionList) {
+  makeDropDownOptionMenuForUSStates(optionList) {
     return (
       <React.Fragment>
         {optionList.map(value => (
@@ -150,7 +150,7 @@ class UserProfile extends Component {
         <h1>{this.state.user.name}</h1>
         <h1>{this.state.user.email}</h1>
         <Link to="/emailUserForm">
-          <span className="card">
+          <span className="card wyre-card">
             <h1>Email</h1>
             <p>
               {this.findWyreProfileFieldStatus(
@@ -161,7 +161,7 @@ class UserProfile extends Component {
           </span>
         </Link>
         <Link to="/cellPhoneUserForm">
-          <span className="card">
+          <span className="card wyre-card">
             <h1>Phone</h1>
             <p>
               {this.findWyreProfileFieldStatus(
@@ -172,7 +172,7 @@ class UserProfile extends Component {
           </span>
         </Link>
         <Link to="/personalDetailsUserForm">
-          <span className="card">
+          <span className="card wyre-card">
             <h1>Personal Details</h1>
             {this.findWyreProfileFieldStatus(
               updateAccountValues.dateOfBirth,
@@ -181,7 +181,7 @@ class UserProfile extends Component {
           </span>
         </Link>
         <Link to="/addressUserForm">
-          <span className="card">
+          <span className="card wyre-card">
             <h1>Address</h1>
             {this.findWyreProfileFieldStatus(
               updateAccountValues.address,
@@ -189,8 +189,8 @@ class UserProfile extends Component {
             ) || ""}
           </span>
         </Link>
-        <Link to={{ pathname: "/documentUserForm", state: { foo: "bar" } }}>
-          <span className="card">
+        <Link to={{ pathname: "/documentUserForm" }}>
+          <span className="card wyre-card">
             <h1>Documents</h1>
             {this.findWyreProfileFieldStatus(
               updateAccountValues.governmentId,
@@ -199,7 +199,7 @@ class UserProfile extends Component {
           </span>
         </Link>
         <Link to="/bankAccountUserForm">
-          <span className="card">
+          <span className="card wyre-card">
             <h1>Bank</h1>
             {this.findWyreProfileFieldStatus(
               updateAccountValues.paymentMethod,
@@ -208,7 +208,7 @@ class UserProfile extends Component {
           </span>
         </Link>
         <Link to="/proofOfAddressUserForm">
-          <span className="card">
+          <span className="card wyre-card">
             <h1>Proof of Address</h1>
             {this.findWyreProfileFieldStatus(
               updateAccountValues.proofOfAddress,
@@ -216,8 +216,10 @@ class UserProfile extends Component {
             ) || ""}
           </span>
         </Link>
-        <h1>Account Id: {wyreAccount.id}</h1>
-        <h1>Account status: {wyreAccount.status}</h1>
+        <div className="">
+          <h1>Account Id: {wyreAccount.id}</h1>
+          <h1>Account status: {wyreAccount.status}</h1>
+        </div>
       </React.Fragment>
     );
   }
