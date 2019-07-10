@@ -45,12 +45,16 @@ class EmailUserForm extends UserProfile {
 
   render() {
     return (
-      <div>
-        <h1>Submit a Valid Email Address</h1>
-        <form onSubmit={this.handleSubmit}>
-          {this.renderInput("email", "Email")}
-          {this.renderButton("Send")}
-        </form>
+      <div className="container-fluid wyre-container">
+        {this.renderWyreHeader("Valid Email Address")}
+        <div className="row justify-content-center align-items-center">
+          <div className="wyre-personal-details-group">
+            <form onSubmit={this.handleSubmit}>
+              {this.renderInput("email", "Email")}
+              {this.renderButton("Send")}
+            </form>
+          </div>
+        </div>
       </div>
     );
   }

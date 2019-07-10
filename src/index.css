@@ -11,3 +11,76 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.user-profile-container {
+  max-width: 600px;
+  margin: 20px auto;
+  background: #fafafa;
+  border-radius: 2%;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+.user-profile-header,
+.wyre-card-header {
+  padding: 20px 0;
+  text-align: center;
+  background: #0d51fb;
+  color: white;
+}
+
+.container-fluid {
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+}
+.wyre-container {
+  text-align: center;
+  background: #fafafa !important;
+  max-width: 500px;
+  margin: 50px 0;
+  border-radius: 5%;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+
+.wyre-card {
+  text-align: center;
+  max-width: 500px;
+  padding: 10px;
+  margin: 10px auto;
+  color: black;
+  text-decoration: none;
+}
+.wyre-card:hover {
+  text-decoration: none;
+}
+
+.drop-zone {
+  outline: 2px dotted black;
+  padding: 50px;
+  margin: 40px 10px;
+  background: white;
+  cursor: pointer;
+}
+
+.wyre-container-footer {
+  text-align: center;
+  padding: 40px 0;
+}
+
+.wyre-input {
+  padding: 40px 0 20px 0;
+}
+.wyre-submit-btn {
+  padding: 20px 0 40px 0;
+}
+
+.wyre-personal-details-group {
+  width: 60%;
+  padding: 70px 0;
+}
+
+.wyre-logo {
+  padding: 40px 0 20px;
+}
+.wyre-logo img {
+  max-width: 100px;
+  max-height: 50px;
+}

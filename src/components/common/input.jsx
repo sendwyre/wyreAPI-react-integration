@@ -1,21 +1,20 @@
 import React from "react";
 
-const Input = ({ type, name, label, value, error, onChange }) => {
+const Input = ({ type, name, label, value, size, error, onChange, onBlur }) => {
   return (
     <div className="form-group">
       <label htmlFor={name}>{label}</label>
-      {/* ref, references the reference object, username created above */}
       <input
         autoFocus={true}
         id={name}
         value={value}
         name={name}
+        // placeholder={label}
         type={type}
         onChange={onChange}
         className="form-control"
       />
-      {/* If there is an error message, display the error */}
-      {error && <div className="alert alert-danger">{error}</div>}
+      <div>{error && <div className="alert alert-danger">{error}</div>}</div>
     </div>
   );
 };

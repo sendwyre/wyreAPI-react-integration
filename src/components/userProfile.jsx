@@ -5,11 +5,12 @@ import Joi from "joi-browser";
 import { Link } from "react-router-dom";
 import { getWyreAccountInformation } from "../services/wyreApiService";
 import { updateAccountValues } from "../wyreapiconfig.json";
-
+import logo from "../assets/wyre-logo.svg";
 class UserProfile extends Component {
   state = {
     user: {},
-    wyreAccount: {}
+    wyreAccount: {},
+    defaultOptionValue: null
   };
 
   async componentWillMount() {
@@ -26,14 +27,19 @@ class UserProfile extends Component {
   }
 
   handleChange = ({ currentTarget: input }) => {
+    const data = { ...this.state.data };
+    data[input.name] = input.value;
+    this.setState({ data });
+  };
+
+  handleError = ({ currentTarget: input }) => {
     const errors = { ...this.state.errors };
     const errorMessage = this.validateProperty(input);
+    console.log("HANDLE ERRORS", errorMessage);
     if (errorMessage) errors[input.name] = errorMessage;
     else delete errors[input.name];
 
-    const data = { ...this.state.data };
-    data[input.name] = input.value;
-    this.setState({ data, errors });
+    this.setState({ errors });
   };
 
   validateProperty = ({ name, value }) => {
@@ -56,7 +62,36 @@ class UserProfile extends Component {
     return errors;
   };
 
-  renderInput(name, label, type = "text") {
+  renderOption(optionList, name, label) {
+    const defaultOptionValue = this.state.defaultOptionValue;
+    return (
+      <React.Fragment>
+        <div>
+          <label>{label}</label>
+        </div>
+        <div>
+          <select onChange={this.handleChange} name={name}>
+            <option value={defaultOptionValue}>{defaultOptionValue}</option>
+            {this.makeDropDownOptionMenuForUSStates(optionList)}
+          </select>
+        </div>
+      </React.Fragment>
+    );
+  }
+
+  makeDropDownOptionMenuForUSStates(optionList) {
+    return (
+      <React.Fragment>
+        {optionList.map(value => (
+          <option key={value} value={value}>
+            {value}
+          </option>
+        ))}
+      </React.Fragment>
+    );
+  }
+
+  renderInput(name, label, size, type = "text") {
     const { data, errors } = this.state;
 
     return (
@@ -64,18 +99,28 @@ class UserProfile extends Component {
         type={type}
         name={name}
         value={data[name]}
+        size={size}
         label={label}
         onChange={this.handleChange}
         error={errors[name]}
+        // onBlur={this.handleError}
       />
+    );
+  }
+
+  renderWyreHeader(header) {
+    return (
+      <div className="wyre-card-header">
+        <h1>{header}</h1>
+      </div>
     );
   }
 
   renderButton(label) {
     return (
-      <button disabled={this.validate()} className="btn btn-primary">
-        {label}
-      </button>
+      <div className="wyre-submit-btn">
+        <button className="btn btn-primary">{label}</button>
+      </div>
     );
   }
 
@@ -95,82 +140,83 @@ class UserProfile extends Component {
 
   render() {
     let wyreAccount = this.state.wyreAccount;
-    // console.log("Parent Render", this.state, wyreAccount);
+    const linkStyle = { textDecoration: "none" };
     return (
-      <React.Fragment>
-        <h1>Welcome</h1>
-        <h1>{this.state.user.name}</h1>
-        <h1>{this.state.user.email}</h1>
-        <Link to="/emailUserForm">
-          <span className="card">
+      <div className="user-profile-container">
+        <div className="user-profile-header">
+          <h1>Verification Set Up</h1>
+        </div>
+        <Link to="/emailUserForm" style={linkStyle}>
+          <span className="card wyre-card">
             <h1>Email</h1>
-            <p>
-              {this.findWyreProfileFieldStatus(
-                updateAccountValues.email,
-                wyreAccount
-              ) || ""}
-            </p>
+            {this.findWyreProfileFieldStatus(
+              updateAccountValues.email,
+              wyreAccount
+            )}
           </span>
         </Link>
-        <Link to="/cellPhoneUserForm">
-          <span className="card">
+        <Link to="/cellPhoneUserForm" style={linkStyle}>
+          <span className="card wyre-card">
             <h1>Phone</h1>
-            <p>
-              {this.findWyreProfileFieldStatus(
-                updateAccountValues.cellPhone,
-                wyreAccount
-              ) || ""}
-            </p>
+            {this.findWyreProfileFieldStatus(
+              updateAccountValues.cellPhone,
+              wyreAccount
+            )}
           </span>
         </Link>
-        <Link to="/personalDetailsUserForm">
-          <span className="card">
+        <Link to="/personalDetailsUserForm" style={linkStyle}>
+          <span className="card wyre-card">
             <h1>Personal Details</h1>
             {this.findWyreProfileFieldStatus(
               updateAccountValues.dateOfBirth,
               wyreAccount
-            ) || ""}
+            )}
           </span>
         </Link>
-        <Link to="/addressUserForm">
-          <span className="card">
+        <Link to="/addressUserForm" style={linkStyle}>
+          <span className="card wyre-card">
             <h1>Address</h1>
             {this.findWyreProfileFieldStatus(
               updateAccountValues.address,
               wyreAccount
-            ) || ""}
+            )}
           </span>
         </Link>
-        <Link to={{ pathname: "/documentUserForm", state: { foo: "bar" } }}>
-          <span className="card">
+        <Link to={{ pathname: "/documentUserForm" }} style={linkStyle}>
+          <span className="card wyre-card">
             <h1>Documents</h1>
             {this.findWyreProfileFieldStatus(
               updateAccountValues.governmentId,
               wyreAccount
-            ) || ""}
+            )}
           </span>
         </Link>
-        <Link to="/bankAccountUserForm">
-          <span className="card">
+        <Link to="/bankAccountUserForm" style={linkStyle}>
+          <span className="card wyre-card">
             <h1>Bank</h1>
             {this.findWyreProfileFieldStatus(
               updateAccountValues.paymentMethod,
               wyreAccount
-            ) || ""}
+            )}
           </span>
         </Link>
-        <Link to="/proofOfAddressUserForm">
-          <span className="card">
+        <Link to="/proofOfAddressUserForm" style={linkStyle}>
+          <span className="card wyre-card">
             <h1>Proof of Address</h1>
             {this.findWyreProfileFieldStatus(
               updateAccountValues.proofOfAddress,
               wyreAccount
-            ) || ""}
+            )}
           </span>
         </Link>
-        <h1>Account Id: {wyreAccount.id}</h1>
-        <h1>Account status: {wyreAccount.status}</h1>
-      </React.Fragment>
+        <div className="wyre-container-footer">
+          <h1>Account Id: {wyreAccount.id}</h1>
+          <h1>Account status: {wyreAccount.status}</h1>
+          <div className="wyre-logo">
+            Powered By: <img src={logo} alt="Wyre Logo" />
+          </div>
+        </div>
+      </div>
     );
   }
 }
