@@ -2,7 +2,7 @@ import React from "react";
 import { uploadWyreDocument } from "../../services/wyreApiService";
 import UserProfile from "../userProfile";
 import { updateAccountValues } from "../../wyreapiconfig.json";
-import Dropzone, { useDropzone } from "react-dropzone";
+import Dropzone from "react-dropzone";
 
 class DocumentUserForm extends UserProfile {
   state = {

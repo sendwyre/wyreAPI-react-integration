@@ -39,7 +39,7 @@ export async function createWyreAccount() {
   console.log("Creating an empty Wyre Account");
   let secretKey = await generateWyreSecretKey();
 
-  const key = await submitWyreAuthToken(secretKey);
+  await submitWyreAuthToken(secretKey);
   let newWyreAccount = {
     type: "INDIVIDUAL",
     country: "US",
