@@ -89,6 +89,7 @@ export async function updateWyrePersonalDetailsAccount(
 
 export async function uploadWyreDocument(file, fieldId, accountId) {
   console.log("Uploading document: " + fieldId);
+  setAxiosHeaders();
   await instance.post("/v3/accounts/" + accountId + "/" + fieldId, file, {
     baseURL: wyreApi.testWyreApiUrl,
     headers: {
